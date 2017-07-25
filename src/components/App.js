@@ -27,9 +27,14 @@ constructor(props){
 componentDidMount(){
   fetch('http://tiny-lasagna-server.herokuapp.com/collections/reactthaimenu')
   .then(results => results.json())
-  .then(resultsData => {
-    console.log(resultsData);
-    //this.setState({})
+  .then(Data => {
+    console.log(Data);
+    this.setState({
+      appetizers: Data[0].Appetizers,
+      entrees: Data[0].Entrees,
+      desserts: Data[0].Desserts
+    })
+    console.log(this.state)
   })
   .catch((error) => {
     console.log("Error with Fetching : ",error);
@@ -39,16 +44,13 @@ componentDidMount(){
     // Your render should consist of the BaseLayout with the following children components: Appetizers, Entrees, and Dessert.
     // Each component needs to receive state via props.
     return (
-      /*
-        BaseLayout and nested components
 
-        */
       <BaseLayout >
-        <Appetizers />
-        <Entrees />
-        <Desserts />
+        <Appetizers items={this.state.appetizers}/>
+        <Entrees items={this.state.entrees}/>
+        <Desserts items={this.state.desserts}/>
       </BaseLayout>
-      
+
     );
   }
 }
